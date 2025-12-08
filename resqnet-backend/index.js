@@ -10,10 +10,10 @@ app.use(express.json());
 // 2. DATABASE CONFIGURATION
 // ⚠️ IMPORTANT: Change 'password' to your actual PostgreSQL password!
 const pool = new Pool({
-  user: 'aayushichhabra',
+  user: '',
   host: 'localhost',
-  database: 'ptycpfbevlsjgjghrpyj',
-  password: 'aayushichhabra', 
+  database: '',
+  password: '', 
   port: 5432,
 });
 

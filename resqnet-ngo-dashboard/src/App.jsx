@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from 'react';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 
 // --- FIX LEAFLET ICONS (Standard Fix) ---
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -60,7 +60,7 @@ function App() {
         setLocationFound(true);
 
         // B. FETCH REAL WEATHER
-        const API_KEY = "7409e2e44f3d9bb3e711968df1a9c462"; // Your Key
+        const API_KEY = ""; // Your Key
         try {
           const wRes = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${API_KEY}`
