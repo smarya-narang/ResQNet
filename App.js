@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useState } from 'react';
 import { View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Screen Imports
+import { BottomTab } from './src/navigation/BottomTab';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import HomeScreen from './src/screens/dashboard/HomeScreen';
 import MapScreen from './src/screens/dashboard/MapScreen';
-import ReportScreen from './src/screens/dashboard/ReportScreen';
 import ProfileScreen from './src/screens/dashboard/ProfileScreen';
-import { BottomTab } from './src/navigation/BottomTab';
+import ReportScreen from './src/screens/dashboard/ReportScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('onboarding'); // 'onboarding', 'login', 'app'
