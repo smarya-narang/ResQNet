@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Alert, TextInput, ActivityIndicator, Moda
 import { Header } from '../../components/UIComponents';
 import { LogOut, ChevronRight, User, Bell, Save, X, AlertTriangle, Clock } from 'lucide-react-native';
 import { getAuth, updateProfile } from 'firebase/auth';
-import { supabase } from '../../services/supabaseConfig'; // <--- Import Supabase
+import { supabase } from '../../services/supabaseConfig'; 
 import HistoryScreen from './HistoryScreen.jsx';
 
 export default function ProfileScreen({ onLogout }) {
@@ -178,6 +178,12 @@ export default function ProfileScreen({ onLogout }) {
                     </View>
                     <View className="flex-1">
                       <Text className="font-bold text-slate-800">{alert.title}</Text>
+                      
+                      {/* --- UPDATED: Show the message/subtext here --- */}
+                      {alert.message && (
+                        <Text className="text-sm text-slate-600 mt-1">{alert.message}</Text>
+                      )}
+
                       <Text className="text-xs text-slate-500 mt-1">
                         {new Date(alert.created_at).toLocaleDateString()} • {new Date(alert.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                       </Text>

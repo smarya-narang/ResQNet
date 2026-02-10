@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, RefreshControl, Alert } from 'react-native';
-import { MapPin, AlertTriangle, Bell, CloudRain, ChevronRight, Sun, Cloud, CloudLightning, Wind, Zap } from 'lucide-react-native';
+import { MapPin, AlertTriangle, Bell, CloudRain, ChevronRight, Sun, Cloud, Zap } from 'lucide-react-native';
 import * as Location from 'expo-location';
 import { supabase } from '../../services/supabaseConfig';
 import { auth } from '../../services/firebaseConfig';
 
-const AlertCard = ({ level, title, time, source }) => (
+// --- UPDATED ALERT CARD ---
+// Added 'message' prop and a Text component to display it
+const AlertCard = ({ level, title, message, time, source }) => (
   <View className={`p-4 rounded-2xl border mb-3 ${level === 'critical' ? 'bg-red-50 border-red-100' : 'bg-blue-50 border-blue-100'}`}>
     <View className="flex-row gap-3">
       {level === 'critical' ? <AlertTriangle size={24} color="#dc2626" /> : <Bell size={24} color="#2563eb" />}
       <View className="flex-1">
         <Text className="font-bold text-slate-800">{title}</Text>
+        
+        {/* NEW: Render the sub-text message if available */}
+        {message ? (
+          <Text className="text-sm text-slate-600 mt-1">{message}</Text>
+        ) : null}
+
         <Text className="text-xs text-slate-500 mt-1">{time} • Source: {source}</Text>
       </View>
     </View>
@@ -84,6 +92,7 @@ export default function HomeScreen({ onNavigate }) {
         id: 'pred-1', 
         level: 'critical', 
         title: 'Severe Thunderstorm Predicted', 
+        message: 'High electrical activity detected in atmosphere.', // Added dummy message for consistency
         time: now, 
         source: 'Automated Weather Model' 
       });
@@ -94,7 +103,8 @@ export default function HomeScreen({ onNavigate }) {
        alerts.push({ 
          id: 'pred-2', 
          level: 'critical', 
-         title: 'Flash Flood Risk: Heavy Rainfall', 
+         title: 'Flash Flood Risk', 
+         message: `Heavy rainfall (${data.precipitation}mm) detected. Seek higher ground.`,
          time: now, 
          source: 'Hydro-Analysis Bot' 
        });
@@ -106,6 +116,7 @@ export default function HomeScreen({ onNavigate }) {
          id: 'pred-3', 
          level: 'warning', 
          title: 'High Wind Advisory', 
+         message: `Wind speeds reaching ${data.wind_speed_10m}km/h. Secure loose objects.`,
          time: now, 
          source: 'Anemometer Network' 
        });
@@ -200,7 +211,14 @@ export default function HomeScreen({ onNavigate }) {
         
         {/* 1. RENDER PREDICTED ALERTS */}
         {predictiveAlerts.map((alert) => (
-           <AlertCard key={alert.id} level={alert.level} title={alert.title} time={alert.time} source={alert.source} />
+           <AlertCard 
+             key={alert.id} 
+             level={alert.level} 
+             title={alert.title} 
+             message={alert.message} // Passing message for consistency
+             time={alert.time} 
+             source={alert.source} 
+           />
         ))}
 
         {/* 2. RENDER OFFICIAL DB ALERTS */}
@@ -209,6 +227,8 @@ export default function HomeScreen({ onNavigate }) {
              key={alert.id} 
              level={alert.level} 
              title={alert.title} 
+             // UPDATED: Now passing the 'message' column from Supabase
+             message={alert.message}
              time={new Date(alert.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} 
              source="Govt. Official"
            />

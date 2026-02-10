@@ -49,9 +49,8 @@ export default function HistoryScreen({ onBack }) {
     switch (s) {
       case 'resolved':
         return { bg: 'bg-green-100', text: 'text-green-700', label: 'Resolved', icon: <CheckCircle size={14} color="#15803d"/> };
-      case 'processing':
-      case 'under process':
-        return { bg: 'bg-blue-100', text: 'text-blue-700', label: 'Processing', icon: <Loader size={14} color="#1d4ed8"/> };
+      case 'active':
+        return { bg: 'bg-blue-100', text: 'text-blue-700', label: 'Active', icon: <Loader size={14} color="#1d4ed8"/> };
       default:
         return { bg: 'bg-yellow-100', text: 'text-yellow-700', label: 'Pending', icon: <Clock size={14} color="#a16207"/> };
     }
